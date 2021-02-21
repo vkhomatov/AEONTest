@@ -10,23 +10,22 @@ import UIKit
 class LoginTextField : UITextField {
     
     let textPadding = UIEdgeInsets(
-            top: 0,
-            left: 10,
-            bottom: 2,
-            right: 0
-        )
-
+        top: 0,
+        left: 10,
+        bottom: 2,
+        right: 0
+    )
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
-            let rect = super.textRect(forBounds: bounds)
-            return rect.inset(by: textPadding)
-        }
-
+        let rect = super.textRect(forBounds: bounds)
+        return rect.inset(by: textPadding)
+    }
+    
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
-            let rect = super.editingRect(forBounds: bounds)
-            return rect.inset(by: textPadding)
-        }
-
+        let rect = super.editingRect(forBounds: bounds)
+        return rect.inset(by: textPadding)
+    }
+    
     init(bounds: CGRect, placeholder: String) {
         super.init(frame: bounds)
         self.borderStyle = .none
@@ -35,6 +34,7 @@ class LoginTextField : UITextField {
         self.contentVerticalAlignment = .center
         self.textAlignment = .left
         self.autocorrectionType = .no
+        self.autocapitalizationType = .none
         self.spellCheckingType = .no
         self.placeholder = placeholder
         self.textColor = .black

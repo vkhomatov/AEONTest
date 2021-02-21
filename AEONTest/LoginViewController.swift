@@ -13,63 +13,38 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private var loginTextField = UITextField()
     private var passwordTextField = UITextField()
     private var loginButton = UIButton()
-    private var errorMessageView = UIView()
-    private var errorMessageLabel = UILabel()
+    private let network = NetworkMonitor()
     
     private let loginPH = "enter login"
     private let passwordPH = "enter password"
     
-    var model = LoginViewModel()
+    private var model = LoginViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupMainViews()
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(DismissKeyboard))
         self.view.addGestureRecognizer(tap)
-        self.setupErrorMessageView()
-       // self.showError(message: "Сучища dsjvsdjvlsdv ksdkvklsdn klsdnvklsdnvklsndvl!!!", delay: 3.0)
+        self.startNetworkMonitor()
         
     }
-
-    func animationView(view: UIView, duration: Double, delay: Double,  offsetY: CGFloat, opacity: Float) {
-        UIView.animate(withDuration: duration, delay: 0.2, animations: {
-            view.frame = view.frame.offsetBy(dx: 0, dy: offsetY)
-                        view.layer.opacity = opacity }) { (finish) in
-            UIView.animate(withDuration: duration, delay: delay, animations: {
-                view.frame = view.frame.offsetBy(dx: 0, dy: offsetY * -1)
-                            view.layer.opacity = opacity })
+    
+    private func startNetworkMonitor() {
+        self.network.monitor.pathUpdateHandler = { [weak self] path in
+            guard let self = self else { return }
+            if path.status == .unsatisfied {
+                DispatchQueue.main.async {
+                    let errorMessage = ErrorMessage(view: self.view)
+                    errorMessage.showError(reverse: true, message: "Back to Online", delay: 3.0)
+                }
+            } else if path.status == .satisfied {
+                DispatchQueue.main.async {
+                    let errorMessage = ErrorMessage(view: self.view)
+                    errorMessage.showError(reverse: true, message: "Offline Mode", delay: 3.0)
+                }
+            }
         }
     }
-    
-    
-    private func setupErrorMessageView() {
-        
-        errorMessageView = UIView(frame: CGRect(x: 2 , y: -50, width: view.frame.width-4, height: 50))
-        errorMessageView.center.x = view.center.x
-        errorMessageView.backgroundColor = .systemRed
-
-        errorMessageLabel = UILabel(frame: CGRect(x: 6 , y: 0, width: view.frame.width-12, height: 46))
-        errorMessageLabel.lineBreakMode = .byWordWrapping
-        errorMessageLabel.textAlignment = .center
-        errorMessageLabel.text = "Loading message ..."
-        errorMessageLabel.numberOfLines = 0
-        errorMessageLabel.font = .systemFont(ofSize: 14, weight: .regular)
-        errorMessageLabel.textColor = .white
-        errorMessageLabel.center = errorMessageView.center
-        errorMessageView.layer.cornerRadius = 6
-        
-        errorMessageView.addSubview(errorMessageLabel)
-        view.addSubview(errorMessageView)
-        
-    }
-    
-    
-    private func showError(message: String, delay: Double) {
-        self.errorMessageLabel.text = message
-        self.animationView(view: self.errorMessageView, duration: 1.0, delay: delay, offsetY: 52.0, opacity: 1.0)
-
-    }
-    
     
     private func setupMainViews() {
         
@@ -79,6 +54,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         captionLabel.textAlignment = .center
         captionLabel.center.x = view.center.x
         captionLabel.text = "AEON Test"
+        
         view.addSubview(captionLabel)
         
         loginTextField = LoginTextField(bounds: CGRect(x: 0,
@@ -106,7 +82,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                                              width: loginTextField.frame.width/1.5,
                                              height: loginTextField.frame.height))
         loginButton.center.x = view.center.x
-        loginButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
+        loginButton.titleLabel?.font = .systemFont(ofSize: 15, weight: .medium)
         loginButton.backgroundColor = .systemYellow
         loginButton.layer.cornerRadius = 6
         loginButton.setTitle("Log in", for: .normal)
@@ -120,10 +96,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private func checkTextFields() {
         
     }
-
+    
     @objc private func loginButtonPressed(_ sender: UIButton?) {
-        //print("Login Button Pressed")
-        
         if loginTextField.text == "" {
             loginTextField.attributedPlaceholder = NSAttributedString(string: loginPH, attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemYellow])
             loginTextField.becomeFirstResponder()
@@ -131,49 +105,44 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             passwordTextField.attributedPlaceholder = NSAttributedString(string: passwordPH, attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemYellow])
             passwordTextField.becomeFirstResponder()
         } else {
-            print("Все введено")
-        
+            captionLabel.text = "Authenfication ..."
             
-            model.getToken { [weak self] message in
-                guard let self = self else { return }
-                if let error = message {
-                    DispatchQueue.main.async {
-                        self.showError(message: error, delay: 3.0)
-                    }
-                } else {
-                    self.model.getPayments { [weak self] message in
-                        guard let self = self else { return }
-                        if let error = message {
-                            DispatchQueue.main.async {
-                                self.showError(message: error, delay: 3.0)
+            if let login = loginTextField.text, let password = passwordTextField.text {
+                model.getToken(login: login, password: password)  { [weak self] message in
+                    guard let self = self else { return }
+                    if message != nil {
+                        DispatchQueue.main.async {
+                            let errorMessage = ErrorMessage(view: self.view)
+                            errorMessage.showError(reverse: true, message: message!, delay: 3.0)
+                            self.captionLabel.text = "AEON Test"
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            let paymentsViewController = PaymentsViewController()
+                            paymentsViewController.view.backgroundColor = .systemGray2
+                            paymentsViewController.modalPresentationStyle = .fullScreen
+                            paymentsViewController.modalTransitionStyle = .coverVertical
+                            
+                            self.present(paymentsViewController, animated: true) {
+                                self.captionLabel.text = "AEON Test"
+                                //self.loginTextField.text = ""
+                                self.passwordTextField.text = ""
+                                self.passwordTextField.attributedPlaceholder = NSAttributedString(string: self.passwordPH, attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
+                                self.loginTextField.attributedPlaceholder = NSAttributedString(string: self.loginPH, attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray])
                             }
-                        } else {
-                            DispatchQueue.main.async {
-                                let paymentsViewController = PaymentsViewController()
-                                paymentsViewController.view.backgroundColor = .systemGray2
-                                paymentsViewController.modalPresentationStyle = .fullScreen
-                                paymentsViewController.modalTransitionStyle = .coverVertical
-                                paymentsViewController.payments = self.model.payments
-                                self.present(paymentsViewController, animated: true, completion: nil)
-                                print(self.model.payments)
-                            }
+                            
+                        }
+                        
                     }
                 }
-                
             }
         }
-            
-
-
     }
-    }
-    
     
     
     @objc func DismissKeyboard() {
         self.view.endEditing(true)
     }
-    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
@@ -186,7 +155,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
         case passwordTextField:
             if textField.text == "" {
-                passwordTextField.attributedPlaceholder = NSAttributedString(string: passwordPH, attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemYellow])
+                textField.attributedPlaceholder = NSAttributedString(string: passwordPH, attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemYellow])
             } else if loginTextField.text == "" {
                 loginTextField.becomeFirstResponder()
             } else {
@@ -202,6 +171,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override var prefersStatusBarHidden: Bool {
         return true
     }
-
+    
 }
 

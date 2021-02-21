@@ -7,6 +7,7 @@
 
 import Foundation
 
+// структура для получения токена
 struct TokenResponse: Codable {
     let success: String
     let response: Response

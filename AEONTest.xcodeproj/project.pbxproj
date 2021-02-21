@@ -19,6 +19,11 @@
 		58CCF7D425E227B5007EA307 /* Payments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CCF7D325E227B5007EA307 /* Payments.swift */; };
 		58CCF7D825E22E3E007EA307 /* PaymentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CCF7D725E22E3E007EA307 /* PaymentsViewController.swift */; };
 		58CCF7DB25E22F00007EA307 /* PaymentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CCF7DA25E22F00007EA307 /* PaymentTableViewCell.swift */; };
+		58CCF7DE25E25274007EA307 /* PaymentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CCF7DD25E25274007EA307 /* PaymentsViewModel.swift */; };
+		58CCF7E125E25375007EA307 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CCF7E025E25375007EA307 /* Session.swift */; };
+		58CCF7EB25E2598B007EA307 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CCF7EA25E2598B007EA307 /* ErrorMessage.swift */; };
+		58CCF7EF25E2A247007EA307 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CCF7EE25E2A247007EA307 /* HeaderView.swift */; };
+		58CCF7F225E2B360007EA307 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CCF7F125E2B360007EA307 /* NetworkMonitor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +41,11 @@
 		58CCF7D325E227B5007EA307 /* Payments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Payments.swift; sourceTree = "<group>"; };
 		58CCF7D725E22E3E007EA307 /* PaymentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsViewController.swift; sourceTree = "<group>"; };
 		58CCF7DA25E22F00007EA307 /* PaymentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTableViewCell.swift; sourceTree = "<group>"; };
+		58CCF7DD25E25274007EA307 /* PaymentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsViewModel.swift; sourceTree = "<group>"; };
+		58CCF7E025E25375007EA307 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		58CCF7EA25E2598B007EA307 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
+		58CCF7EE25E2A247007EA307 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		58CCF7F125E2B360007EA307 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,21 +78,50 @@
 		5809786425E112E1002386EF /* AEONTest */ = {
 			isa = PBXGroup;
 			children = (
+				58CCF7F625E2BBE3007EA307 /* Data */,
+				58CCF7F425E2BB25007EA307 /* MVC */,
+				58CCF7F525E2BB59007EA307 /* Services */,
 				5809786525E112E1002386EF /* AppDelegate.swift */,
 				5809786725E112E1002386EF /* SceneDelegate.swift */,
-				5809786925E112E1002386EF /* LoginViewController.swift */,
-				58CCF7CD25E17A86007EA307 /* LoginViewModel.swift */,
-				5809788225E1359F002386EF /* LoginTextField.swift */,
-				5809787F25E131C9002386EF /* NetworkService.swift */,
-				58CCF7D025E21DF6007EA307 /* TokenResponse.swift */,
-				58CCF7D325E227B5007EA307 /* Payments.swift */,
-				58CCF7D725E22E3E007EA307 /* PaymentsViewController.swift */,
-				58CCF7DA25E22F00007EA307 /* PaymentTableViewCell.swift */,
 				5809786E25E112E4002386EF /* Assets.xcassets */,
 				5809787025E112E4002386EF /* LaunchScreen.storyboard */,
 				5809787325E112E4002386EF /* Info.plist */,
 			);
 			path = AEONTest;
+			sourceTree = "<group>";
+		};
+		58CCF7F425E2BB25007EA307 /* MVC */ = {
+			isa = PBXGroup;
+			children = (
+				5809786925E112E1002386EF /* LoginViewController.swift */,
+				58CCF7CD25E17A86007EA307 /* LoginViewModel.swift */,
+				58CCF7D725E22E3E007EA307 /* PaymentsViewController.swift */,
+				58CCF7DD25E25274007EA307 /* PaymentsViewModel.swift */,
+				5809788225E1359F002386EF /* LoginTextField.swift */,
+				58CCF7EE25E2A247007EA307 /* HeaderView.swift */,
+				58CCF7DA25E22F00007EA307 /* PaymentTableViewCell.swift */,
+			);
+			name = MVC;
+			sourceTree = "<group>";
+		};
+		58CCF7F525E2BB59007EA307 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				58CCF7EA25E2598B007EA307 /* ErrorMessage.swift */,
+				5809787F25E131C9002386EF /* NetworkService.swift */,
+				58CCF7F125E2B360007EA307 /* NetworkMonitor.swift */,
+				58CCF7E025E25375007EA307 /* Session.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		58CCF7F625E2BBE3007EA307 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				58CCF7D325E227B5007EA307 /* Payments.swift */,
+				58CCF7D025E21DF6007EA307 /* TokenResponse.swift */,
+			);
+			name = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -156,14 +195,19 @@
 			files = (
 				58CCF7DB25E22F00007EA307 /* PaymentTableViewCell.swift in Sources */,
 				5809786A25E112E1002386EF /* LoginViewController.swift in Sources */,
+				58CCF7DE25E25274007EA307 /* PaymentsViewModel.swift in Sources */,
 				5809786625E112E1002386EF /* AppDelegate.swift in Sources */,
 				58CCF7D425E227B5007EA307 /* Payments.swift in Sources */,
 				58CCF7D125E21DF6007EA307 /* TokenResponse.swift in Sources */,
+				58CCF7EB25E2598B007EA307 /* ErrorMessage.swift in Sources */,
+				58CCF7F225E2B360007EA307 /* NetworkMonitor.swift in Sources */,
 				58CCF7CE25E17A86007EA307 /* LoginViewModel.swift in Sources */,
 				5809788025E131C9002386EF /* NetworkService.swift in Sources */,
+				58CCF7E125E25375007EA307 /* Session.swift in Sources */,
 				58CCF7D825E22E3E007EA307 /* PaymentsViewController.swift in Sources */,
 				5809786825E112E1002386EF /* SceneDelegate.swift in Sources */,
 				5809788325E1359F002386EF /* LoginTextField.swift in Sources */,
+				58CCF7EF25E2A247007EA307 /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

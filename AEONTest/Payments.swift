@@ -7,14 +7,14 @@
 
 import Foundation
 
-// MARK: - Payments
+/*
+// Структура для Codable
 struct Payments: Codable {
     var success = String()
-    var response = [PamentsResponse]()
+    var response = [PaymentsResponse]()
 }
 
-// MARK: - Response
-struct PamentsResponse: Codable {
+struct PaymentsResponse: Codable {
     let desc: String
     let amount: Amount
     let currency: String?
@@ -47,4 +47,34 @@ enum Amount: Codable {
             try container.encode(x)
         }
     }
+} */
+
+
+// Сктура для JSONSerialization
+struct PaymentsJson {
+    var desc = String()
+    var amount1: Double?
+    var amount2: String?
+    var amount = String()
+    var currency = String()
+    var created1: Int?
+    var created2: String?
+    var created = String()
 }
+
+// Структура для ошибки при авторизации
+struct TokenError: Codable {
+    let success: String
+    let error: ErrorClass
+}
+
+struct ErrorClass: Codable {
+    let errorCode: Int
+    let errorMsg: String
+
+    enum CodingKeys: String, CodingKey {
+        case errorCode = "error_code"
+        case errorMsg = "error_msg"
+    }
+}
+
