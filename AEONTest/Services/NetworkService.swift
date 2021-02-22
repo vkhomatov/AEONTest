@@ -13,6 +13,9 @@ class NetworkService {
     
     let session: URLSession = {
         let config = URLSessionConfiguration.default
+       // config.waitsForConnectivity = true
+       // config.timeoutIntervalForRequest = 30
+        config.timeoutIntervalForResource = 100
         config.httpAdditionalHeaders = ["app-key" : "12345", "v" : "1"]
         return URLSession(configuration: config)
     }()
@@ -99,6 +102,7 @@ class NetworkService {
                     if let payments = json["response"] as? [[String: Any]] {
                         completion(.success(payments), nil)
                     }
+                    print(json)
                 }
             } else if let error = error  {
                 completion(.failure(error), nil)

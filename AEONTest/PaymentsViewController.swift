@@ -12,6 +12,7 @@ class PaymentsViewController: UIViewController, UITableViewDelegate, UITableView
     private var tableView = UITableView()
     private var headerView = HeaderView()
     private var model = PaymentsViewModel()
+    private var dateFormat = DateFormat()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,7 +104,7 @@ class PaymentsViewController: UIViewController, UITableViewDelegate, UITableView
             cell.desc.text = "Desc: " + model.paymentsJson[indexPath.row].desc
             cell.currency.text = "Currency: " + model.paymentsJson[indexPath.row].currency
             cell.amount.text = "Amount: " + model.paymentsJson[indexPath.row].amount
-            cell.created.text = "Created: " + model.paymentsJson[indexPath.row].created
+            cell.created.text = "Created: " + self.dateFormat.getDateInfo(dateString: model.paymentsJson[indexPath.row].created)
         }
         
         cell.selectionStyle = .none

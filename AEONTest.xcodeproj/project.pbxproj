@@ -14,6 +14,7 @@
 		5809787225E112E4002386EF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5809787025E112E4002386EF /* LaunchScreen.storyboard */; };
 		5809788025E131C9002386EF /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5809787F25E131C9002386EF /* NetworkService.swift */; };
 		5809788325E1359F002386EF /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5809788225E1359F002386EF /* LoginTextField.swift */; };
+		58105B8E25E3B5DE008EE85C /* DateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58105B8D25E3B5DE008EE85C /* DateFormat.swift */; };
 		58CCF7CE25E17A86007EA307 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CCF7CD25E17A86007EA307 /* LoginViewModel.swift */; };
 		58CCF7D125E21DF6007EA307 /* TokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CCF7D025E21DF6007EA307 /* TokenResponse.swift */; };
 		58CCF7D425E227B5007EA307 /* Payments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58CCF7D325E227B5007EA307 /* Payments.swift */; };
@@ -36,6 +37,7 @@
 		5809787325E112E4002386EF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5809787F25E131C9002386EF /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		5809788225E1359F002386EF /* LoginTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
+		58105B8D25E3B5DE008EE85C /* DateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormat.swift; sourceTree = "<group>"; };
 		58CCF7CD25E17A86007EA307 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		58CCF7D025E21DF6007EA307 /* TokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenResponse.swift; sourceTree = "<group>"; };
 		58CCF7D325E227B5007EA307 /* Payments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Payments.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				5809787F25E131C9002386EF /* NetworkService.swift */,
 				58CCF7F125E2B360007EA307 /* NetworkMonitor.swift */,
 				58CCF7E025E25375007EA307 /* Session.swift */,
+				58105B8D25E3B5DE008EE85C /* DateFormat.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -203,6 +206,7 @@
 				58CCF7F225E2B360007EA307 /* NetworkMonitor.swift in Sources */,
 				58CCF7CE25E17A86007EA307 /* LoginViewModel.swift in Sources */,
 				5809788025E131C9002386EF /* NetworkService.swift in Sources */,
+				58105B8E25E3B5DE008EE85C /* DateFormat.swift in Sources */,
 				58CCF7E125E25375007EA307 /* Session.swift in Sources */,
 				58CCF7D825E22E3E007EA307 /* PaymentsViewController.swift in Sources */,
 				5809786825E112E1002386EF /* SceneDelegate.swift in Sources */,

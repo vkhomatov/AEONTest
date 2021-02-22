@@ -22,11 +22,11 @@ class ErrorMessage {
     }
     
     private func animationView(reverse: Bool, duration: Double, delay: Double,  offsetY: CGFloat, opacity: Float) {
-        UIView.animate(withDuration: duration, delay: 0.2, animations: { [self] in
+        UIView.animate(withDuration: duration, delay: 0.2, options: .curveEaseOut, animations: { [self] in
                         self.errorMessageView.frame = self.errorMessageView.frame.offsetBy(dx: 0, dy: offsetY)
                         errorMessageView.layer.opacity = opacity }) { (finish) in
             if reverse {
-                UIView.animate(withDuration: duration, delay: delay, animations: {
+                UIView.animate(withDuration: duration, delay: delay, options: .curveEaseIn, animations: {
                                 self.errorMessageView.frame = self.errorMessageView.frame.offsetBy(dx: 0, dy: offsetY * -1)
                                 self.errorMessageView.layer.opacity = opacity })
             }
