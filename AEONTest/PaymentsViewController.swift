@@ -16,6 +16,7 @@ class PaymentsViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.createViews()
         self.setCallbacks()
     }
@@ -40,19 +41,21 @@ class PaymentsViewController: UIViewController, UITableViewDelegate, UITableView
         //            }
         //        }
         
-        model.getPaymentsJson { [weak self] message in
-            guard let self = self else { return }
-            if let error = message {
-                DispatchQueue.main.async {
-                    let errorMessage = ErrorMessage(view: self.view)
-                    errorMessage.showError(reverse: true, message: error, delay: 3.0)
-                }
-            } else {
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    self.tableView.reloadData()
-                    self.headerView.captionLabel.text = "Payments"
-                    
+        DispatchQueue.main.async {
+            self.model.getPaymentsJson { [weak self] message in
+                guard let self = self else { return }
+                if let error = message {
+                    DispatchQueue.main.async {
+                        let errorMessage = ErrorMessage(view: self.view)
+                        errorMessage.showError(reverse: true, message: error, delay: 3.0)
+                    }
+                } else {
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        self.tableView.reloadData()
+                        self.headerView.captionLabel.text = "Payments"
+                        
+                    }
                 }
             }
         }
@@ -66,6 +69,8 @@ class PaymentsViewController: UIViewController, UITableViewDelegate, UITableView
         self.tableView.register(PaymentTableViewCell.self, forCellReuseIdentifier: "cell")
         self.tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.tableView.separatorStyle = .singleLine
+       // self.tableView.rowHeight = UITableView.automaticDimension
+        
         view.addSubview(tableView)
         
         headerView = HeaderView(frame: CGRect(x: 0 , y: 0, width:  UIScreen.main.bounds.width, height: 60))
@@ -108,6 +113,7 @@ class PaymentsViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         cell.selectionStyle = .none
+        // cell.setConstraints()
         
         return cell
     }
@@ -115,5 +121,17 @@ class PaymentsViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return self.headerView
     }
+
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
+//
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        cell.layoutIfNeeded()
+//    }
+//
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
     
 }
